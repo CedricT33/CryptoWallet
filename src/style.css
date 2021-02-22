@@ -1,0 +1,74 @@
+/** ------------POLICES---------------- */
+
+@font-face {
+    font-family: 'fontawesome';
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url(../fonts/fa-solid-900.eot);
+    src: url(../fonts/fa-solid-900.eot?#iefix) format("embedded-opentype"), 
+    url(../fonts/fa-solid-900.woff2) format("woff2"), 
+    url(../fonts/fa-solid-900.woff) format("woff"), 
+    url(../fonts/fa-solid-900.ttf) format("truetype"), 
+    url(../fonts/fa-solid-900.svg#fontawesome) format("svg"); 
+}
+
+@font-face {
+    font-family: 'spartan-black';
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url(../fonts/Spartan-Black.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: 'spartan-light';
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url(../fonts/Spartan-Light.ttf) format("truetype");
+}
+
+
+
+/** ------------ANIMATIONS---------------- */
+
+
+/** ------------BASES---------------- */
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    margin: 0;
+    background-color: #242a3a;
+    font-family: 'spartan-light';
+    color: #e6e6e6;
+    font-variant-caps: small-caps;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+::-webkit-scrollbar { 
+    width: 5px; 
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb { 
+    width: 5px; 
+    background: #616161;
+    border-radius: 1px/3px;
+} 
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    width: 100%;
+    z-index: 1000;
+    position: fixed;
+}

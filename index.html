@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="theme-color" content="#242a3a">
+        <title>Crypto Wallet</title>
+        <link rel="stylesheet" href="src/style.css">
+        <link rel="manifest" href="manifest.json">
+        <link rel="apple-touch-icon" href="./images/logo192.png">
+        <link rel="icon" type="image/png" href="./images/logo192.png">
+    </head>
+    <body>
+        <!----- HEADER ----->
+        <header>
+            
+        </header>
+
+        <!----- FORMULAIRE ACHAT----->
+        <div id="ajout-container">
+            <form id="formulaire-container">
+                
+            </form>
+            <div id="validation-container">
+                <button type="button" id="btn-ok" onclick="clickOK()">OK</button>
+            </div>
+        </div>
+
+        <!----- POPIN ----->
+        <div id="popin-masque" onclick="detruirePopin()"></div>
+        <div id="popin">
+            <input id="index-popin">
+            <div id="popin-container">
+                <div id="popin-titre"></div>
+                <div id="popin-corps"></div>
+            </div>
+            <div id="validation-container-popin">
+                <button type="button" id="btn-popin" onclick="clickOKPopin()">OK</button>
+            </div>
+        </div>
+
+        <!----- PRESENTATION ----->
+        <div id="fleche-presentation"></div>
+        <div id="presentation-container">
+            <div id="texte-presentation-container">
+                <div id="titre-presentation">Bienvenue !</div>
+                <div id="texte-presentation">Pour ajouter un achat <br> veuillez cliquer sur <br>
+                                             le bouton <strong>+</strong></div>
+            </div>
+        </div>
+
+        <!----- SCRIPTS ----->
+        <!-- <script src="src/index.js"></script> -->
+        <script src="src/script.js"></script> 
+    </body>
+</html>
