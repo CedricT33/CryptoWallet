@@ -22,9 +22,18 @@
 }
 
 @font-face {
+    font-family: 'spartan-bold';
+    font-style: normal;
+    font-weight: 700;
+    font-display: block;
+    src: url(../fonts/Spartan-Bold.ttf) format("truetype");
+}
+
+
+@font-face {
     font-family: 'spartan-light';
     font-style: normal;
-    font-weight: 400;
+    font-weight: 300;
     font-display: block;
     src: url(../fonts/Spartan-Light.ttf) format("truetype");
 }
@@ -42,11 +51,10 @@
 }
 
 body {
-    margin: 0;
     background-color: #242a3a;
-    font-family: 'spartan-light';
+    font-family: 'spartan-black';
     color: #e6e6e6;
-    font-variant-caps: small-caps;
+    font-variant-caps: all-small-caps;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -67,8 +75,184 @@ body {
 header {
     display: flex;
     justify-content: space-between;
-    padding: 0;
     width: 100%;
     z-index: 1000;
     position: fixed;
+}
+
+#logo {
+    font-size: 24px;
+    color: #242a3a;
+    transform: scaleY(0.9);
+    letter-spacing: 0.5px;
+    padding: 15px 20px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#logo span {
+    font-family: 'spartan-light';
+    letter-spacing: -0.5px;
+}
+
+#container_haut, #container_bas {
+    flex-grow: 1;
+}
+
+#container_haut{
+    background: linear-gradient(150deg, #53bcf5 0%, #55a5f0 50%, #4268e9 100%);
+    z-index: 1;
+    position: relative;
+}
+
+#container_bas {
+    z-index: 2;
+    background: #242a3a;
+    position: relative;
+}
+
+#deco {
+    background-image: url(../images/Wallet.png);
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 57vh;
+    width: 10vh;
+    right: 0;
+    top: -1vh;
+    color: rgb(255, 255, 255, 0.1);
+}
+
+#bitcoin {
+    background-image: url(../images/Bitcoin.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 125px;
+    width: 165px;
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+#portefeuille {
+    color: #242a3a;
+    font-family: 'spartan-bold';
+    position: absolute;
+    padding-left: 20px;
+    padding-bottom: 5px;
+    width: 83vw;
+    top: 23%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    border-left: 3px solid;
+}
+
+#total {
+    font-size: 40px;
+}
+
+#gains, #pourcentage {
+    font-size: 24px;
+    font-family: 'spartan-light';
+    font-weight: bold;
+}
+
+nav {
+    position: absolute;
+    top: -30px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#ajout, #retour, #graph {
+    font-family: 'fontawesome';
+    font-size: 48px;
+    -webkit-tap-highlight-color: transparent;
+    padding: 0px 15px;
+    margin: 0px 21px;
+    position: relative;
+    cursor: pointer;
+}
+
+#ajout:before, #graph:before {
+    content: "\f111";
+    color: #242a3a;
+    position: absolute;
+    z-index: -1;
+    font-size: 70px;
+    top: -14px;
+    left: 7px;
+}
+
+#ajout:after {
+    content: "\f055";
+    color: #55a5f0;
+}
+
+#graph:after {
+    content: "\f200";
+    color: #4268e9;
+}
+
+/** ------------FORMULAIRE------------------ */
+
+#index {
+    position: absolute;
+    top: -1000px;
+}
+
+#ajout-container {
+    justify-content: space-around;
+    flex: 1;
+    margin-top: 96px;
+    display: none;
+}
+
+#ajout-container.show {
+    display: flex;
+    flex-direction: column;
+}
+
+/** ------------PRESENTATION---------------- */
+
+#fleche-presentation {
+    background-image: url(../images/Fleche.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 100px;
+    width: 70px;
+    position: absolute;
+    top: 35px;
+    left: 70px;
+}
+
+#presentation-container, #texte-presentation-container, #titre-presentation {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    color: #b4b4b4;
+    position: absolute;
+}
+
+#presentation-container {
+    margin-top: 160px;
+    width: 100%;
+    height: 125px;
+}
+
+#texte-presentation {
+    font-size: 23px;
+    transform: scaleY(0.9);
+    font-family: 'spartan-light';
+}
+
+#texte-presentation strong {
+    font-family: 'spartan-bold';
+    font-size: 25px;
+}
+
+#fleche-presentation.hide, #presentation-container.hide {
+    display: none;
 }
