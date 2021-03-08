@@ -11,78 +11,92 @@
         <link rel="icon" type="image/png" href="./images/logo192.png">
     </head>
     <body>
+
+        <!----- CONTAINER PRINCIPAL ---------------------------->
+        <div id="container_principal">
         
-        <!----- HAUT --------------------------------------->
-        <div id="container_haut">
-            <div id="deco"></div>
-            <!----- HEADER ----->
-            <header>
-                <a id="logo">Crypto <span>wallet</span></a>
-                <a id="img-params"></a>
-            </header>
+            <!----- HAUT ------------------------>
+            <div id="container_haut">
+                <div id="deco"></div>
+                <!----- HEADER ----------->
+                <header>
+                    <a id="logo">Crypto <span>wallet</span></a>
+                    <a id="img-params"></a>
+                </header>
 
-            <!----- PORTEFEUILLE ----->
-            <div id="portefeuille">
-                <div id="total">0,00 €</div>
-                <div id="gains">+ 0 €</div>
-                <div id="pourcentage">+ 0 %</div>
-            </div>
-
-            <div id="bitcoin"></div>
-        </div>
-
-        <!----- BAS --------------------------------------->
-        <div id="container_bas">
-            <!----- NAVIGATION ----->
-            <nav>
-                <div id="ajout"></div>
-                <div id="retour"></div>
-                <div id="graph"></div>
-            </nav>
-
-            <!----- PRESENTATION ----->
-            <div id="fleche-presentation"></div>
-            <div id="presentation-container">
-                <div id="texte-presentation">
-                    <strong>Bienvenue !</strong><br>
-                    Pour ajouter un achat <br> veuillez cliquer sur <br>
-                    le bouton <strong>+</strong>
+                <!----- PORTEFEUILLE ----->
+                <div id="portefeuille">
+                    <div id="total">0,00 €</div>
+                    <div id="gains">+ 0 €</div>
+                    <div id="pourcentage">+ 0 %</div>
                 </div>
+
+                <!----- GRAPH ------------>
+
+                <div id="bitcoin"></div>
             </div>
 
+            <!----- BAS -------------------------->
+            <div id="container_bas">
+                <!----- NAVIGATION ------->
+                <nav>
+                    <div id="ajout" onclick="clickAjout()"></div>
+                    <div id="retour"></div>
+                    <div id="graph"></div>
+                </nav>
+
+                <div id="titre_vignettes">Marchés</div>
+
+                <!--- VIGNETTES COURS --->
+                <div id="cours_container"></div>
+
+                <!--- VIGNETTES ACHAT --->
+
+                <!----- PRESENTATION ---->
+                <div id="fleche-presentation"></div>
+                <div id="presentation-container">
+                    <div id="texte-presentation">
+                        <strong>Bienvenue !</strong><br>
+                        Pour ajouter un achat <br> veuillez cliquer sur <br>
+                        le bouton <strong>+</strong>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-        <!----- FORMULAIRE ACHAT ------------------------->
+        <!----- FORMULAIRE ACHAT ---------------------------->
         <div id="ajout-container">
             <header>
-                <div id="formulaire_retour"></div>
+                <div id="formulaire_retour" onclick="clickRetour()"></div>
                 <div id="titre_formulaire">Achat <span>Crypto</span></div>
             </header>
-            <form id="formulaire-container">
-                <input id="index">
-                <select id="saisieCrypto" name="crypto">
-                    <option value="" disabled selected>Crypto</option>
-                    <option value="BTC">BTC</option>
-                    <option value="ETH">ETH</option>
-                </select>
-                <input id="saisieQuantite" type="text" name="quantite" placeholder="Quantité" maxlength="17">
-                <input id="saisieCours" type="text" name="cours" placeholder="Cours (€)" maxlength="17">
-                <div>Total : <span id="form_total">0</span> €</div>
-                <div id="date">
-                    <input id="saisieJour" type="number" name="jour" placeholder="Jour" max="2">
-                    <input id="saisieMois" type="number" name="mois" placeholder="Mois" max="2">
-                    <input id="saisieAnnee" type="number" name="annee" placeholder="Année" max="4">
+            <div id="formulaire_total">
+                <form id="formulaire-container">
+                    <input id="index">
+                    <select id="saisieCrypto" name="crypto">
+                        <option value="" disabled selected>Crypto</option>
+                    </select>
+                    <input id="saisieQuantite" type="number" name="quantite" placeholder="Quantité" max="10">
+                    <input id="saisieCours" type="number" name="cours" placeholder="Cours (€)" max="17">
+                    <div id="total_container">Total : <span id="form_total">0</span> €</div>
+                    <div id="date">
+                        <input id="saisieJour" type="number" name="jour" placeholder="Jour" max="2">
+                        <input id="saisieMois" type="number" name="mois" placeholder="Mois" max="2">
+                        <input id="saisieAnnee" type="number" name="annee" placeholder="Année" max="4">
+                    </div>
+                </form>
+                <div id="validation-container">
+                    <button type="button" id="btn-ok" onclick="clickOK()">OK</button>
                 </div>
-            </form>
-            <div id="validation-container">
-                <button type="button" id="btn-ok" onclick="clickOK()">OK</button>
             </div>
         </div>
 
-        <!----- POPIN ----------------------------------->
+        <!----- POPIN -------------------------------------->
 
-        <!----- SCRIPTS --------------------------------->
-        <!-- <script src="src/index.js"></script> -->
+        <!----- SCRIPTS ------------------------------------>
+        <script src="src/index.js"></script>
+        <script src="src/ajax.js"></script> 
         <script src="src/script.js"></script> 
     </body>
 </html>
