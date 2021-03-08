@@ -33,7 +33,7 @@ self.addEventListener("install", event => {
         })
     );
 });
-/*
+/* TODO Mis en commentaire pour Tests -> erreurs de cross origins... a débuguer..
 // Listen for request
 self.addEventListener("fetch", event => {
     console.log('[Service Worker] Recherche... : ', event.request.url);

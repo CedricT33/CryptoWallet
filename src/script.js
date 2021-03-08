@@ -360,7 +360,7 @@ function ajoutVignettesHTMLCours(objetCoursCryptos) {
  */
 function affichageVignettes(objetCoursCryptos) {
     ajoutVignettesHTMLCours(objetCoursCryptos);
-    //ajoutVignettesHTMLAchats();
+    //ajoutVignettesHTMLAchats(); TODO
 }
 
 /**
@@ -400,6 +400,24 @@ function miseAJourPortefeuilleTemplate() {
     animateValue(elmtPortefeuilleTotal, ExTotalCrypto, totalCryptos, 1000, "prix");
     animateValue(elmtPortefeuilleGains, 0, gains, 1000, "prix");
     animateValue(elmtPortefeuillePoucentage, 0, pourcentage, 1000, "pourcentage");
+}
+
+/**
+ * SUPPRIME LES VIGNETTES COURS
+ */
+ function suppressionVignettesCours() {
+    var elmtConteneur = document.getElementById('cours_container');
+    while (elmtConteneur.lastElementChild) {
+        elmtConteneur.removeChild(elmtConteneur.lastElementChild);
+    }
+}
+
+/**
+ * SUPPRIME LES VIGNETTES COURS ET ACHATS
+ */
+ function suppressionVignettes() {
+    suppressionVignettesCours();
+    //suppressionVignettesAchats(); TODO
 }
 
 /**
@@ -459,10 +477,13 @@ function miseAJourPortefeuille() {
     console.log("objectQuantiteCrypto : ", objetQuantiteCrypto);
 
     if (Object.keys(objetQuantiteCrypto).length !== 0) {
+        suppressionVignettes();
+        // TODO ajouter loader
         recuperationCoursCryptos(Object.keys(objetQuantiteCrypto)).then(function(reponse) {
             console.log("réponse de l'API : ", reponse);
             calculTotalCryptos(reponse);
             miseAJourPortefeuilleTemplate();
+            // TODO fin loader
             affichageVignettes(reponse);
         });
     }
