@@ -477,13 +477,11 @@ function miseAJourPortefeuille() {
     console.log("objectQuantiteCrypto : ", objetQuantiteCrypto);
 
     if (Object.keys(objetQuantiteCrypto).length !== 0) {
-        suppressionVignettes();
-        // TODO ajouter loader
         recuperationCoursCryptos(Object.keys(objetQuantiteCrypto)).then(function(reponse) {
             console.log("réponse de l'API : ", reponse);
             calculTotalCryptos(reponse);
             miseAJourPortefeuilleTemplate();
-            // TODO fin loader
+            suppressionVignettes();
             affichageVignettes(reponse);
         });
     }
@@ -517,8 +515,9 @@ function onDocumentReady() {
     getVersion();
     ajoutCryptosFormulaire();
     recuperationLocalStorage();
-    miseAJourPortefeuille();
     gestionAffichagePresentation();
+    miseAJourPortefeuille();
+    setInterval(miseAJourPortefeuille, 15000);
 }
 
 /** -----AU CHARGEMENT DU DOM----- */
