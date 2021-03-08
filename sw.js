@@ -1,11 +1,12 @@
 // Constantes
-const VERSION = "01.00.001";
+const VERSION = "01.00.002";
 const CACHE_NAME_STATIC = "static-" + VERSION;
 const CACHE_NAME_DYNAMIC = "dynamic-" + VERSION;
 const urlsToCache = [ 
         "./",
         "./index.html",
         "./src/index.js",
+        "./src/ajax.js",
         "./src/style.css", 
         "./src/script.js",
         "./fonts/fa-solid-900.ttf",
