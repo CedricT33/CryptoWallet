@@ -131,7 +131,9 @@ function clickOK() {
         ajoutLocalStorage(objetAchat);
         miseAJourPortefeuille();
         faireDisparaitrePageFormulaire();
-        gestionAffichagePresentation(); 
+        gestionAffichagePresentation();
+        suppressionVignettesAchats();
+        ajoutVignettesHTMLAchats();
     }
     else {
         //TODO -> popin erreur?

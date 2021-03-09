@@ -43,6 +43,29 @@
 /** ------------ANIMATIONS---------------- */
 
 
+@keyframes sliding-left-apparition {
+    0% {
+        -webkit-transform: translate(-100vw, 0);
+                transform: translate(-100vw, 0);
+    }
+    100% {
+        -webkit-transform: translate(0, 0);
+                transform: translate(0, 0);
+    }
+}
+
+@keyframes sliding-right-apparition {
+    0% {
+        -webkit-transform: translate(100vw, 0);
+                transform: translate(100vw, 0);
+    }
+    100% {
+        -webkit-transform: translate(0, 0);
+                transform: translate(0, 0);
+    }
+}
+
+
 /** ------------BASES---------------- */
 
 * {
@@ -148,10 +171,11 @@ header {
     bottom: -1px;
     left: 50%;
     transform: translate(-50%, 0%);
+    transition: all 0.5s ease-out;
 }
 
 #bitcoin.hide {
-    display: none;
+    bottom: -125px;
 }
 
 #portefeuille {
@@ -165,10 +189,12 @@ header {
     left: 50%;
     transform: translate(-50%, 0%);
     border-left: 3px solid;
+    opacity: 1;
+    transition: all 0.3s ease-out;
 }
 
 #portefeuille.hide {
-    display: none;
+    opacity: 0;
 }
 
 #total {
@@ -383,7 +409,10 @@ nav {
     flex-direction: column;
     align-items: center;
     overflow-y: auto;
+    overflow-x: hidden;
 }
+
+
 
 #cours_container.hide, #achats_container.hide {
     display: none
@@ -396,6 +425,14 @@ nav {
     box-shadow: 0px 0px 10px 0px rgb(0 0 0);
     border-radius: 5px;
     display: flex;
+}
+
+.vignette_achats {
+    animation: sliding-right-apparition 0.5s ease-out;
+}
+
+.vignette_cours {
+    animation: sliding-left-apparition 0.5s ease-out;
 }
 
 .vignette_cours:last-child, .vignette_achats:last-child {
