@@ -431,7 +431,7 @@ nav {
     animation: sliding-right-apparition 0.5s ease-out;
 }
 
-.vignette_cours {
+.vignette_cours.animation {
     animation: sliding-left-apparition 0.5s ease-out;
 }
 

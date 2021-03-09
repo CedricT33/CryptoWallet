@@ -75,6 +75,7 @@ function clickAjout() {
     var elemtGraph = document.getElementById('graph');
     var elemtAjout = document.getElementById('ajout');
     var elemtCoursContainer = document.getElementById('cours_container');
+    var elemtVignettesCours = document.getElementsByClassName('vignette_cours');
     var elemtAchatsContainer = document.getElementById('achats_container');
     var elemtTitre = document.getElementById('titre_vignettes');
 
@@ -87,6 +88,9 @@ function clickAjout() {
     elemtAjout.classList.remove('hide');
     elemtCoursContainer.classList.remove('hide');
     elemtAchatsContainer.classList.add('hide');
+    for (const element of elemtVignettesCours) {
+        element.classList.add('animation');
+    }   
     elemtTitre.textContent = "Marchés";
 }
 
