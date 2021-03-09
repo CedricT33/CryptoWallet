@@ -17,7 +17,7 @@
         
             <!----- HAUT ------------------------>
             <div id="container_haut">
-                <div id="deco"></div>
+                <div id="deco" class="wallet"></div>
                 <!----- HEADER ----------->
                 <header>
                     <a id="logo">Crypto <span>wallet</span></a>
@@ -41,8 +41,8 @@
                 <!----- NAVIGATION ------->
                 <nav>
                     <div id="ajout" onclick="clickAjout()"></div>
-                    <div id="retour"></div>
-                    <div id="graph"></div>
+                    <div id="retour" class="hide" onclick="clickRetour()"></div>
+                    <div id="graph" onclick="clickGraph()"></div>
                 </nav>
 
                 <div id="titre_vignettes">Marchés</div>
@@ -51,6 +51,7 @@
                 <div id="cours_container"></div>
 
                 <!--- VIGNETTES ACHAT --->
+                <div id="achats_container" class="hide"></div>
 
                 <!----- PRESENTATION ---->
                 <div id="fleche-presentation"></div>
@@ -68,7 +69,7 @@
         <!----- FORMULAIRE ACHAT ---------------------------->
         <div id="ajout-container">
             <header>
-                <div id="formulaire_retour" onclick="clickRetour()"></div>
+                <div id="formulaire_retour" onclick="clickRetourFormulaire()"></div>
                 <div id="titre_formulaire">Achat <span>Crypto</span></div>
             </header>
             <div id="formulaire_total">

@@ -120,7 +120,6 @@ header {
 }
 
 #deco {
-    background-image: url(../images/Wallet.png);
     position: absolute;
     background-repeat: no-repeat;
     background-size: contain;
@@ -129,6 +128,14 @@ header {
     right: 0;
     top: -1vh;
     color: rgb(255, 255, 255, 0.1);
+}
+
+.wallet {
+    background-image: url(../images/Wallet.png);
+}
+
+.stats {
+    background-image: url(../images/Stats.png);
 }
 
 #bitcoin {
@@ -143,6 +150,10 @@ header {
     transform: translate(-50%, 0%);
 }
 
+#bitcoin.hide {
+    display: none;
+}
+
 #portefeuille {
     color: #242a3a;
     font-family: 'spartan-bold';
@@ -154,6 +165,10 @@ header {
     left: 50%;
     transform: translate(-50%, 0%);
     border-left: 3px solid;
+}
+
+#portefeuille.hide {
+    display: none;
 }
 
 #total {
@@ -184,7 +199,7 @@ nav {
     cursor: pointer;
 }
 
-#ajout:before, #graph:before {
+#ajout:before, #graph:before, #retour:before {
     content: "\f111";
     color: #242a3a;
     position: absolute;
@@ -203,6 +218,16 @@ nav {
     content: "\f200";
     color: #4268e9;
 }
+
+#retour:after {
+    content: "\f137";
+    color: #55a5f0;
+}
+
+#retour.hide, #graph.hide, #ajout.hide {
+    display: none;
+}
+
 
 /** ------------FORMULAIRE------------------ */
 
@@ -349,7 +374,7 @@ nav {
 }
 
 
-#cours_container {
+#cours_container, #achats_container {
     display: flex;
     width: 100%;
     position: absolute;
@@ -360,7 +385,11 @@ nav {
     overflow-y: auto;
 }
 
-.vignette_cours {
+#cours_container.hide, #achats_container.hide {
+    display: none
+}
+
+.vignette_cours, .vignette_achats {
     width: calc(100% - 30px);
     height: 60px;
     margin: 8px;
@@ -369,7 +398,7 @@ nav {
     display: flex;
 }
 
-.vignette_cours:last-child {
+.vignette_cours:last-child, .vignette_achats:last-child {
     margin-bottom: 17px;
 }
 
@@ -398,6 +427,23 @@ nav {
 .vignette_prix {
     font-size: 25px;
     letter-spacing: 0.5px;
+}
+
+.vignette_achat {
+    text-align: center;
+}
+
+.vignette_achat_prix {
+    font-size: 20px;
+}
+
+.vignette_achat_date, .vignette_cours_achat {
+    color: #518fcc;
+}
+
+.vignette_cours_achat {
+    text-align: right;
+    font-size: 18px;
 }
 
 
