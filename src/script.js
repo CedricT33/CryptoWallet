@@ -614,7 +614,7 @@ function onDocumentReady() {
     ajoutVignettesHTMLAchats();
     gestionAffichagePresentation();
     miseAJourPortefeuille();
-    //setInterval(miseAJourPortefeuille, 15000);
+    setInterval(miseAJourPortefeuille, 15000);
 }
 
 /** -----AU CHARGEMENT DU DOM----- */
