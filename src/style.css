@@ -483,6 +483,23 @@ nav {
     font-size: 18px;
 }
 
+/** ------------GRAPH---------------- */
+
+#graph_container {
+    width: 100%;
+    height: calc(100% - 50px);
+    position: absolute;
+    margin-top: 50px;
+}
+
+#graph_container.hide {
+    display: none;
+}
+
+.highcharts-credits {
+    display: none;
+}
+
 
 /** ------------PRESENTATION---------------- */
 

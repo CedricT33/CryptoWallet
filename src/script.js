@@ -2,10 +2,13 @@
 var version = '';
 var storage = [];
 var objetQuantiteCrypto = new Object();
+var objetTotalCrypto = new Object();
+var objetCoursCryptosJSON = new Object();
 var urlAPIBase = "https://min-api.cryptocompare.com/data/";
 var ExTotalCrypto = 0;
 var totalAchats = 0;
 var totalCryptos = 0;
+var chart;
 
 // Cryptos implémentées dans l'application
 var cryptoMonnaies = {
@@ -34,30 +37,33 @@ function clickAjout() {
 }
 
 /**
- * AU CLICK SUR GRAPH
+ * AU CLICK SUR LE BOUTON GRAPH
  */
  function clickGraph() {
     if (storage) {
         var elemtDeco = document.getElementById('deco');
         var elemtPortefeuille = document.getElementById('portefeuille');
         var elemtBitcoin = document.getElementById('bitcoin');
-        var elemtRetour = document.getElementById('retour');
-        var elemtGraph = document.getElementById('graph');
-        var elemtAjout = document.getElementById('ajout');
+        var elemtBtnRetour = document.getElementById('retour');
+        var elemBtnGraph = document.getElementById('graph');
+        var elemtBtnAjout = document.getElementById('ajout');
         var elemtCoursContainer = document.getElementById('cours_container');
         var elemtAchatsContainer = document.getElementById('achats_container');
+        var elemtGraph = document.getElementById('graph_container');
         var elemtTitre = document.getElementById('titre_vignettes');
 
         elemtDeco.classList.remove('wallet');
         elemtDeco.classList.add('stats');
         elemtPortefeuille.classList.add('hide');
         elemtBitcoin.classList.add('hide');
-        elemtRetour.classList.remove('hide');
-        elemtGraph.classList.add('hide');
-        elemtAjout.classList.add('hide');
+        elemtBtnRetour.classList.remove('hide');
+        elemBtnGraph.classList.add('hide');
+        elemtBtnAjout.classList.add('hide');
         elemtCoursContainer.classList.add('hide');
         elemtAchatsContainer.classList.remove('hide');
+        elemtGraph.classList.remove('hide');
         elemtTitre.textContent = "Transactions";
+        creationGraph();
     }
     else {
         // TODO popin -> "Aucunes données" ?
@@ -71,23 +77,25 @@ function clickAjout() {
     var elemtDeco = document.getElementById('deco');
     var elemtPortefeuille = document.getElementById('portefeuille');
     var elemtBitcoin = document.getElementById('bitcoin');
-    var elemtRetour = document.getElementById('retour');
-    var elemtGraph = document.getElementById('graph');
-    var elemtAjout = document.getElementById('ajout');
+    var elemtBtnRetour = document.getElementById('retour');
+    var elemtBtnGraph = document.getElementById('graph');
+    var elemtBtnAjout = document.getElementById('ajout');
     var elemtCoursContainer = document.getElementById('cours_container');
     var elemtVignettesCours = document.getElementsByClassName('vignette_cours');
     var elemtAchatsContainer = document.getElementById('achats_container');
+    var elemtGraph = document.getElementById('graph_container');
     var elemtTitre = document.getElementById('titre_vignettes');
 
     elemtDeco.classList.remove('stats');
     elemtDeco.classList.add('wallet');
     elemtPortefeuille.classList.remove('hide');
     elemtBitcoin.classList.remove('hide');
-    elemtRetour.classList.add('hide');
-    elemtGraph.classList.remove('hide');
-    elemtAjout.classList.remove('hide');
+    elemtBtnRetour.classList.add('hide');
+    elemtBtnGraph.classList.remove('hide');
+    elemtBtnAjout.classList.remove('hide');
     elemtCoursContainer.classList.remove('hide');
     elemtAchatsContainer.classList.add('hide');
+    elemtGraph.classList.add('hide');
     for (const element of elemtVignettesCours) {
         element.classList.add('animation');
     }   
@@ -332,7 +340,34 @@ function ajoutLocalStorage(objetAchat) {
 
 
 
+/**
+ * CREATION DU GRAPH DE STATS
+ */
+ function creationGraph() {
+     var donneesGraph = [];
 
+    for (const crypto in objetQuantiteCrypto) {
+        donneesGraph.push({
+            name: crypto.toString(),
+            y: objetTotalCrypto[crypto],
+            z: objetCoursCryptosJSON[crypto].EUR,
+            pc: ((objetTotalCrypto[crypto] * 100) / totalCryptos).toFixed(2)
+        });
+    }
+
+    chart = Highcharts.chart('graph_container', {
+        chart: {
+            type: 'variablepie',
+            styledMode: true
+        },
+        series: [{
+            minPointSize: 60,
+            innerSize: '20%',
+            zMin: 0,
+            data: donneesGraph
+        }]
+    });
+}
 
 /**
  * AFFICHE LA PRESENTATION DE L'APPLI SI LE LOCALSTORAGE EST VIDE
@@ -579,6 +614,7 @@ function miseAJourPortefeuille() {
     if (Object.keys(objetQuantiteCrypto).length !== 0) {
         recuperationCoursCryptos(Object.keys(objetQuantiteCrypto)).then(function(reponse) {
             console.log("réponse de l'API : ", reponse);
+            objetCoursCryptosJSON = reponse;
             calculTotalCryptos(reponse);
             miseAJourPortefeuilleTemplate();
             suppressionVignettesCours();

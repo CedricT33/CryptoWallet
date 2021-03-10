@@ -6,6 +6,7 @@
         <meta name="theme-color" content="#242a3a">
         <title>Crypto Wallet</title>
         <link rel="stylesheet" href="src/style.css">
+        <link rel="stylesheet" href="src/highcharts.css">
         <link rel="manifest" href="manifest.json">
         <link rel="apple-touch-icon" href="./images/logo192.png">
         <link rel="icon" type="image/png" href="./images/logo192.png">
@@ -32,6 +33,7 @@
                 </div>
 
                 <!----- GRAPH ------------>
+                <div id="graph_container" class="hide"></div>
 
                 <div id="bitcoin"></div>
             </div>
@@ -97,7 +99,9 @@
 
         <!----- SCRIPTS ------------------------------------>
         <script src="src/index.js"></script>
-        <script src="src/ajax.js"></script> 
+        <script src="src/ajax.js"></script>
+        <script src="src/highcharts.js"></script>
+        <script src="src/variable-pie.js"></script>
         <script src="src/script.js"></script> 
     </body>
 </html>
