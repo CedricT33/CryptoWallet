@@ -1,5 +1,5 @@
 // Constantes
-const VERSION = "01.00.008";
+const VERSION = "01.00.009";
 const CACHE_NAME_STATIC = "static-" + VERSION;
 const CACHE_NAME_DYNAMIC = "dynamic-" + VERSION;
 const urlsToCache = [ 
@@ -67,7 +67,6 @@ self.addEventListener("fetch", event => {
 // Activate SW
 self.addEventListener("activate", event => {
     console.log('[Service Worker] [2] Activation du Service Worker...');
-    setVersion();
     event.waitUntil(
         caches.keys().then((keyList) => {
             return Promise.all(keyList.map(key => {
@@ -79,10 +78,3 @@ self.addEventListener("activate", event => {
         })
     )
 });
-
-// Envoi de la version par PostMessage depuis le SW
-function setVersion() {
-    const channel = new BroadcastChannel('sw-version');
-    console.log('envoie de la version');
-    channel.postMessage({version: VERSION});
-}

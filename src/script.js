@@ -1,5 +1,4 @@
 /** ----- VALUES ------ */
-var version = '';
 var storage = [];
 var objetQuantiteCrypto = new Object();
 var objetTotalCrypto = new Object();
@@ -19,13 +18,74 @@ var cryptoMonnaies = {
     AAVE: 'Aave'
 }
 
-/** ----- RECUPERATION DE LA VERSION DEPUIS LE SW ------ */
-function getVersion() {
-    const channel = new BroadcastChannel('sw-version');
-    channel.addEventListener('message', event => {
-        localStorage.setItem("version", event.data.version);
-        console.log('récupération de la version : ', event.data.version);
-    });
+/**********************************
+               POPIN
+**********************************/
+
+//** -----DESTRUCTION POPIN----- */
+function detruirePopin() {
+    var elmtPopin = document.getElementById('popin');
+    var elmtMasquePopin = document.getElementById('popin-masque');
+    var elmtPopinTitre = document.getElementById('popin-titre');
+    var elmtPopinCorps = document.getElementById('popin-corps');
+  
+    elmtPopinTitre.innerText = '';
+    elmtPopinCorps.innerText = '';
+    elmtPopin.classList.remove('open');
+    elmtMasquePopin.classList.remove('open');
+}
+
+//** -----CREATION POPIN----- */
+function creationPopin(titre, corps) {
+    var elmtPopin = document.getElementById('popin');
+    var elmtMasquePopin = document.getElementById('popin-masque');
+    var elmtPopinTitre = document.getElementById('popin-titre');
+    var elmtPopinCorps = document.getElementById('popin-corps');
+  
+    elmtPopinTitre.innerText = titre;
+    elmtPopinCorps.innerText = corps;
+    elmtPopin.classList.add('open');
+    elmtMasquePopin.classList.add('open');
+}
+
+//** -----OUVERTURE POPIN SUPPRESSION----- */
+function ouverturePopinSuppression(crypto) {
+    var titre = 'SUPPRESSION';
+    var corps = 'Etes-vous sûr de vouloir supprimer cette transaction de ' + crypto + ' ?';
+    creationPopin(titre, corps);
+}
+
+/** ----- AU CLIC SUR VALIDATION POPIN ------ */
+function clickOKPopin() {
+    var valueIndex = document.getElementById('index-popin').value;
+    if(valueIndex !== 'version' && valueIndex !== 'maj') {
+        supprimerDonneeStorage(valueIndex);
+        detruirePopin();
+        clickRetour();
+    }
+    else {
+        detruirePopin();
+    }
+}
+
+/** ----- AU CLIC SUR SUPPRIMER UNE VIGNETTE ------ */
+function clickSuppr(element) {
+    var index = element.id.substr(6,1);
+    var crypto = "";
+    document.getElementById('index-popin').value = index;
+    storage.forEach( elmt => {
+        if (elmt.index == index) {
+            crypto = elmt.crypto;
+        }
+    })
+    ouverturePopinSuppression(crypto);
+}
+
+/** ----- AU CLIC SUR MODIFIER UNE VIGNETTE ------ */
+function clickModif(element) {
+    var index = element.id.substring(6);
+    remplirFormulaire(index);  
+    faireApparaitrePageFormulaire();
 }
 
 /**
@@ -40,7 +100,7 @@ function clickAjout() {
  * AU CLICK SUR LE BOUTON GRAPH
  */
  function clickGraph() {
-    if (storage) {
+    if (storage && storage.length !== 0) {
         var elemtDeco = document.getElementById('deco');
         var elemtPortefeuille = document.getElementById('portefeuille');
         var elemtBitcoin = document.getElementById('bitcoin');
@@ -49,6 +109,7 @@ function clickAjout() {
         var elemtBtnAjout = document.getElementById('ajout');
         var elemtCoursContainer = document.getElementById('cours_container');
         var elemtAchatsContainer = document.getElementById('achats_container');
+        var elemtVignettesAchat = document.getElementsByClassName('vignette_achats');
         var elemtGraph = document.getElementById('graph_container');
         var elemtTitre = document.getElementById('titre_vignettes');
 
@@ -62,6 +123,9 @@ function clickAjout() {
         elemtCoursContainer.classList.add('hide');
         elemtAchatsContainer.classList.remove('hide');
         elemtGraph.classList.remove('hide');
+        for (const element of elemtVignettesAchat) {
+            element.classList.add('animation');
+        }  
         elemtTitre.textContent = "Transactions";
         creationGraph();
     }
@@ -109,6 +173,24 @@ function clickRetourFormulaire() {
     faireDisparaitrePageFormulaire();
 }
 
+/** ----- AU CLIC SUR UNE VIGNETTE ------ */
+function clickAccordeon(element) {
+    var elmtsAccordeons = document.getElementsByClassName("accordeon-content");
+    var listClassElmt = element.nextElementSibling.classList;
+
+    if (listClassElmt.contains('active')) {
+        listClassElmt.remove('active');
+    }
+    else {
+        for (let elmt of elmtsAccordeons) {
+            if (elmt.classList.contains('active')) {
+                elmt.classList.remove('active');
+            }
+        }
+        listClassElmt.add('active');
+    }
+}
+
 /**
  * AU CLICK SUR OK DU FORMULAIRE D'ACHAT
  */
@@ -144,8 +226,6 @@ function clickOK() {
         miseAJourPortefeuille();
         faireDisparaitrePageFormulaire();
         gestionAffichagePresentation();
-        suppressionVignettesAchats();
-        ajoutVignettesHTMLAchats();
     }
     else {
         //TODO -> popin erreur?
@@ -250,6 +330,18 @@ function ajouterEcouteurDate() {
     }
 }
 
+/** ----- LE FORMULAIRE SE REMPLIT GRACE A L'INDEX ------ */
+function remplirFormulaire(index) {
+    var objetVignette = recupererObjetVignette(index);
+    document.getElementById('index').value = objetVignette.index;
+    document.getElementById('saisieCrypto').value = objetVignette.crypto;
+    document.getElementById('saisieQuantite').value = objetVignette.quantite;
+    document.getElementById('saisieCours').value = objetVignette.cours;
+    document.getElementById('saisieJour').value = objetVignette.jour;
+    document.getElementById('saisieMois').value = objetVignette.mois;
+    document.getElementById('saisieAnnee').value = objetVignette.annee;
+}
+
 /**
  * FAIRE DISPARAITRE LA PAGE D'AJOUT/MODIFICATION D'ACHAT
  */
@@ -312,6 +404,30 @@ function controleSaisie(objetAchat) {
     else {
         return false;
     }
+}
+
+/** ----- SUPPRESSION D'UNE DONNEE DU LOCAL STORAGE ------ */
+function supprimerDonneeStorage(index) {
+    storage.forEach( (elmt, id) => {
+        if (elmt.index == index) {
+            storage.splice(id, 1);
+        }
+    })
+    localStorage.setItem("achats", JSON.stringify(storage));
+    recuperationLocalStorage();
+    miseAJourPortefeuille();
+    gestionAffichagePresentation();
+}
+
+/** ----- RECUPERE L'OBJET DU LOCAL STORAGE AVEC L'INDEX ------ */
+function recupererObjetVignette(index) {
+    var element = {};
+    storage.forEach(elmt => {
+        if (elmt.index == index) {
+            element = elmt;
+        }
+    })
+    return element;
 }
 
 /**
@@ -439,10 +555,14 @@ function constructionVignetteCoursHTML(crypto_nom, crypto_complet, cours) {
     var prixAchat = formatPrix(total) + " €";
     var prixCours = formatPrix(cours) + " €";
 
+    var rentabilite = ((objetCoursCryptosJSON[crypto].EUR - (total/quantite)) / (total/quantite)) * 100;
+    var rentabiliteFormated = formatPrix(rentabilite) + " %";
+    var rentabiliteFinale = rentabilite >= 0 ? "+" + rentabiliteFormated : rentabiliteFormated;
+    var couleur = rentabilite >= 0 ? '' : ' negatif';
+
     var elmtAchatsConteneur = document.getElementById('achats_container');
     var elmtVignetteConteneur = creerElement('div', 0, 'vignette_achats');
-    var elmtLogo = creerElement('div', 0, 'vignette_logo ' + crypto);
-    var elmtInfos = creerElement('div', 0, 'vignette_infos');
+    var elmtInfos = creerElement('div', 0, 'vignette_infos', undefined, 'clickAccordeon(this)');
     var elmtNoms = creerElement('div', 0, 'vignette_noms');
     var elmtAcronymeCrypto = creerElement('div', 0, 'acronyme_crypto', crypto);
     var elmtNomCrypto = creerElement('div', 0, 'nom_crypto', cryptoMonnaies[crypto]);
@@ -451,7 +571,14 @@ function constructionVignetteCoursHTML(crypto_nom, crypto_complet, cours) {
     var elmtAchatDate = creerElement('div', 0, 'vignette_achat_date', date);
     var elmtCoursAchat = creerElement('div', 0, 'vignette_cours_achat');
     var elmtCours = creerElement('div', 0, 'vignette_cours_prix', prixCours);
-    var elmtQuantite = creerElement('div', 0, 'vignette_quantite', quantite);
+    var elmtQuantite = creerElement('div', 0, 'vignette_rentabilite' + couleur, rentabiliteFinale);
+    var elmtAccordeon = creerElement('div', 0, 'accordeon-content');
+    var elmtSuppr = creerElement('a', 'suppr-' + index, 'btn-suppr', undefined, 'clickSuppr(this)');
+    var elmtImgSuppr = creerElement('div', 0, 'img-suppr');
+    var elmtTextSuppr = creerElement('div', 0, 'supprimer', 'Supprimer');
+    var elmtModif = creerElement('a', 'modif-' + index, 'btn-modif', undefined, 'clickModif(this)');
+    var elmtImgModif = creerElement('div', 0, 'img-modif');
+    var elmtTextModif = creerElement('div', 0, 'modifier', 'Modifier');
     
     elmtNoms.appendChild(elmtAcronymeCrypto);
     elmtNoms.appendChild(elmtNomCrypto);
@@ -462,8 +589,14 @@ function constructionVignetteCoursHTML(crypto_nom, crypto_complet, cours) {
     elmtInfos.appendChild(elmtNoms);
     elmtInfos.appendChild(elmtAchat);
     elmtInfos.appendChild(elmtCoursAchat);
-    elmtVignetteConteneur.appendChild(elmtLogo);
+    elmtModif.appendChild(elmtImgModif);
+    elmtModif.appendChild(elmtTextModif);
+    elmtSuppr.appendChild(elmtImgSuppr);
+    elmtSuppr.appendChild(elmtTextSuppr);
+    elmtAccordeon.appendChild(elmtSuppr);
+    elmtAccordeon.appendChild(elmtModif);
     elmtVignetteConteneur.appendChild(elmtInfos);
+    elmtVignetteConteneur.appendChild(elmtAccordeon);
     elmtAchatsConteneur.appendChild(elmtVignetteConteneur);
 }
 
@@ -475,6 +608,8 @@ function ajoutVignettesHTMLCours(objetCoursCryptos) {
     var crypto_nom = '';
     var crypto_complet = '';
     var cours = 0;
+
+    suppressionVignettesCours();
 
     for (const crypto in objetCoursCryptos) {
         crypto_nom = crypto;
@@ -488,6 +623,7 @@ function ajoutVignettesHTMLCours(objetCoursCryptos) {
  * CREATION VIGNETTES ACHATS
  */
  function ajoutVignettesHTMLAchats() {
+    suppressionVignettesAchats();
     if (storage) {
         storage.forEach( (achat) => {
             var date = "" + achat.jour + "/" + achat.mois + "/" + achat.annee;
@@ -596,6 +732,7 @@ function miseAJourPortefeuille() {
     totalCryptos = 0;
     objetQuantiteCrypto = new Object();
     objetTotalCrypto = new Object();
+    objetCoursCryptosJSON = new Object();
 
     if (storage) {
         storage.forEach( elmt => {
@@ -617,9 +754,13 @@ function miseAJourPortefeuille() {
             objetCoursCryptosJSON = reponse;
             calculTotalCryptos(reponse);
             miseAJourPortefeuilleTemplate();
-            suppressionVignettesCours();
             ajoutVignettesHTMLCours(reponse);
+            ajoutVignettesHTMLAchats();
         });
+    }
+    else {
+        miseAJourPortefeuilleTemplate();
+        ajoutVignettesHTMLCours(objetCoursCryptosJSON);
     }
 }
 
@@ -648,13 +789,11 @@ function ajoutCryptosFormulaire() {
  * LANCE LES FONCTIONS DE DEMARRAGE DE L'APP
  */
 function onDocumentReady() {
-    getVersion();
     ajoutCryptosFormulaire();
     recuperationLocalStorage();
-    ajoutVignettesHTMLAchats();
     gestionAffichagePresentation();
     miseAJourPortefeuille();
-    setInterval(miseAJourPortefeuille, 15000);
+    //setInterval(miseAJourPortefeuille, 15000);
 }
 
 /** -----AU CHARGEMENT DU DOM----- */

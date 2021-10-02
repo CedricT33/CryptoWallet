@@ -254,10 +254,24 @@ nav {
     display: none;
 }
 
+.img-suppr, .img-modif {
+    font-family: 'fontawesome';
+    font-size: 23px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.img-suppr:before {
+    content: "\f1f8";
+}
+
+.img-modif:before {
+    content: "\f303";
+}
+
 
 /** ------------FORMULAIRE------------------ */
 
-#index {
+#index, #index-popin {
     position: absolute;
     top: -1000px;
 }
@@ -372,7 +386,7 @@ nav {
     text-align: center;
 }
 
-#btn-ok {
+#btn-ok, #btn-popin {
     font-family: 'spartan-black';
     font-size: 22px;
     transform: scaleY(0.9);
@@ -412,22 +426,20 @@ nav {
     overflow-x: hidden;
 }
 
-
-
 #cours_container.hide, #achats_container.hide {
     display: none
 }
 
 .vignette_cours, .vignette_achats {
     width: calc(100% - 30px);
-    height: 60px;
     margin: 8px;
     box-shadow: 0px 0px 10px 0px rgb(0 0 0);
     border-radius: 5px;
     display: flex;
+    flex-direction: column;
 }
 
-.vignette_achats {
+.vignette_achats.animation {
     animation: sliding-right-apparition 0.5s ease-out;
 }
 
@@ -443,9 +455,8 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
     font-family: 'spartan-light';
-    padding: 10px;
+    padding: 5px 10px;
 }
 
 .acronyme_crypto {
@@ -483,6 +494,45 @@ nav {
     font-size: 18px;
 }
 
+.accordeon-content, .btn-suppr, .btn-modif {
+    display: flex;
+}
+
+.accordeon-content {
+    justify-content: space-evenly;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1000ms;
+}
+
+.accordeon-content.active {
+    max-height: 5rem;
+}
+
+.btn-suppr, .btn-modif {
+    margin: 20px;
+}
+
+.supprimer, .modifier {
+    color: #b4b4b4;
+    font-size: 15px;
+    transform: scaleY(0.9);
+    padding-top: 5px;
+}
+
+.supprimer, .modifier {
+    padding-left: 10px;
+}
+
+.vignette_rentabilite {
+    color: #93e892;
+}
+
+.vignette_rentabilite.negatif {
+    color: #e99292;
+}
+  
+
 /** ------------GRAPH---------------- */
 
 #graph_container {
@@ -498,6 +548,66 @@ nav {
 
 .highcharts-credits {
     display: none;
+}
+
+/** ------------POPIN---------------- */
+
+#popin, #popin-masque {
+    display: none;
+}
+
+#popin-titre, #popin-corps, #btn-popin, #validation-container-popin  {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+#popin-titre, #popin-corps, #btn-popin {
+    margin: 30px;
+}
+
+#popin-titre {
+    font-family: 'spartan-black';
+    font-size: 25px;
+    transform: scaleY(0.9);
+}
+
+#popin-corps {
+    font-family: 'spartan-light';
+    font-size: 20px;
+    line-height: 35px;
+    padding: 25px 0px 0px;
+}
+  
+#popin.open {
+    display: flex;
+    flex-direction: column;
+    z-index: 1001;
+    width: 80%;
+    max-height: 70%;
+    overflow: auto;
+    position: fixed;
+    box-shadow: 0px 0px 25px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    top: 20%;
+    left: 0;
+    right: 0;
+    background: #22262e;
+    margin: auto;
+    padding: 0.5em;
+    animation: apparition 0.3s ease-out;
+}
+  
+#popin-masque.open {
+    z-index: 1000;
+    display: block;
+    opacity: 0.5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #000;
 }
 
 
