@@ -12,7 +12,7 @@ var chart;
 // Cryptos implémentées dans l'application
 var cryptoMonnaies = {
     BTC: 'Bitcoin',
-    ETH: 'Etherum',
+    ETH: 'Ethereum',
     XRP: 'Ripple',
     BNB: 'Binance',
     AAVE: 'Aave'
